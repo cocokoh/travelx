@@ -1,0 +1,75 @@
+<h1>Countries</h1>
+
+<a class="waves-effect waves-light btn" href="#modal1">Add Countries</a>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+      Add New Country
+<form action="/admin/countries/add" method="POST" class="col s12" enctype="multipart/form-data">
+  <div class="row">
+    <div class="input-field col s6">
+        <label for="country"></label>
+      <input placeholder="Country"id="country" name="country"type="text" class="validate">
+    </div>
+    <div class="input-field col s6">
+      <label for="city"></label>
+      <input placeholder="City"id="city" name="city"type="text" class="validate">
+    </div>
+  </div>
+  <div class="row">
+    <div class ="input-field col s6">
+      <label for="price"></label>
+      <input placeholder="Price"id="price" name="price"type="number" class="validate">
+    </div>
+    <div class ="input-field col s6">
+      <label for="continent"></label>
+      <input placeholder="Continent"id="continent" name="continent"type="number" class="validate">
+    </div>
+  </div>
+  <div class="row">
+      <label for="cityPicture">Attach City Picture</label>
+      <input type='file' name='cityPicture'>
+  <input type="submit" onclick = "<% preload() %>" class="waves-effect waves-light btn" id="submitbtn"/>
+  <div class="preloader-wrapper" id = "preloading">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+  <% function preload() { %>
+    document.getElementById('preloading').classList.add('active')
+<%  }%>
+  </div>
+</form>
+</div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.modal').modal();
+    });
+</script>
+
+
+  <div class="row">
+<% country.forEach(function (data){ %>
+        <div class="col s12 l3">
+          <div class="card">
+            <div class="card-image">
+              <img src="<%= data.picture %>">
+              <span class="card-title"><%= data.city %>, <%=data.country %></span>
+            </div>
+            <div class="card-content">
+              <p><%= data.price %></p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+        </div>
+<% }) %>
+</div>

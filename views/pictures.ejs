@@ -1,0 +1,87 @@
+<h4>What would you like to see?</h4>
+<div class="row">
+    <div class="col s9">
+        <% picture.forEach(function(data){ %>
+            <div class="col l4">
+                <div class="card">
+                    <div class="card-image">
+                        <img src="<%= data.picture %>">
+                        <span class="card-title" name="<%= data.continent %>"><%= data.continent %></span>
+                        <a class="btn-floating halfway-fab waves-effect waves-light red add"><i class="material-icons">add</i></a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+    <div class="col s3">
+        <form action="/results" method="POST" class='col s10 picturesform'>
+            <input type="submit" value="next" class="submit waves-effect waves-light btn" style="display:none;" />
+            <br />
+        </form>
+    </div>
+</div>
+
+<script>
+    function removeButton(e) {
+        let target = e.parentNode.remove()
+        let picture = $(e.parentNode).find('img').attr('src')
+        let con = $(e.parentNode).find('input').attr('placeholder')
+        let itemImage = $(
+                              `<div class="col l4">
+                              <div class="card">
+                              <div class="card-image">
+                              <img src=${picture} />
+                              <span class="card-title" name="${con}">${con}</span>
+                              <a class="btn-floating halfway-fab waves-effect waves-light red" onclick="addAgain(this)"><i class="material-icons">add</i></a>
+                              </div>
+                              </div>`
+        )
+        $(itemImage).appendTo(".s9")
+        removeCheck()
+    }
+
+    function removeCheck(){
+      if ($(".sideBar").length) {
+        console.log($(".sideBar").length)
+      } else {
+        $(".submit").css("display", "none")
+      }
+    }
+    function addAgain(e) {
+        let con = $(e.parentNode).find('span').attr('name')
+        let item = e.parentNode.parentNode.parentNode.remove()
+        let picture = $(e.parentNode).find('img').attr('src')
+        let itemImage = $(
+            `<div class="card sideBar">
+                              <div class="card-image">
+                              <img src=${picture} />
+                              </div>
+                              <div type="button" class="remove waves-effect waves-light btn" onclick="removeButton(this)">Remove</div>
+                              <input value=${picture} type="hidden" name="picture" placeholder="${con}" />
+                              </div>`
+        )
+        $(itemImage).appendTo(".picturesform")
+        $(".submit").css("display", "block")
+        removeCheck()
+    }
+
+    $(document).ready(function() {
+        $(".add").click(function(e) {
+          let con = $(e.target.parentNode.parentNode).find('span').attr('name')
+          let item = e.target.parentNode.parentNode.parentNode.parentNode.remove()
+          let picture = $(e.target.parentNode.parentNode).find('img').attr('src')
+          let itemImage = $(
+              `<div class="card sideBar">
+                              <div class="card-image">
+                              <img src=${picture} />
+                              </div>
+                              <div type="button" class="remove waves-effect waves-light btn" onclick="removeButton(this)">Remove</div>
+                              <input value=${picture} type = "hidden" placeholder="${con}" name="picture"/>
+                              </div>`
+          )
+          $(itemImage).appendTo(".picturesform")
+          $(".submit").css("display", "block")
+          removeCheck()
+        })
+    });
+</script>
