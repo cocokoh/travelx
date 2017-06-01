@@ -102,6 +102,7 @@ router.post('/login', passport.authenticate('local', {
   }, function(err, data) {
     if (err)
       throw err
+      console.log(data)
     var datas = data
     // console.log(datas)
     // console.log(req.user.id)

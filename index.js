@@ -76,6 +76,6 @@ app.use('/', main)
 
 
 
-app.listen(port, function() {
+app.listen(process.env.PORT || 8000, function() {
   console.log('listening to ' + port)
 })
