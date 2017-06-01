@@ -8,7 +8,7 @@ var isLoggedIn = require('../middleware/isLoggedIn')
 var Country = require('../models/countrymodel')
 var cloudinary = require('cloudinary')
 var multer = require('multer')
-var upload = multer({dest: '../uploads/'})
+var upload = multer({dest: '../uploads'})
 var fs = require('fs');
 
 router.get('/countries', function(req, res) {
