@@ -5,9 +5,9 @@ require('dotenv').config({
 })
 
 var mongoose = require('mongoose')
-// var port = 8000
-var port = process.env.PORT || 8000
-// var dbURI = 'mongodb://localhost/lastproject'
+
+var port = process.env.PORT || 5000;
+
 var dbURI = process.env.PROD_MONGODB || 'mongodb://localhost:27017/lastproject'
 mongoose.connect(dbURI)
 var db = mongoose.connection
