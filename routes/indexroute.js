@@ -10,62 +10,83 @@ var Country = require('../models/countrymodel')
 var geocoder = require('geocoder')
 var request = require('request')
 
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   res.render('homepage')
 })
 
-router.post('/choosepictures', function(req, res) {
+router.post('/choosepictures', function (req, res) {
   Country.find({
     continent: req.body.continent
-  }, function(err, data) {
+  }, function (err, data) {
     var currentIndex = data.length,
       temporaryValue,
-      randomIndex;
+      randomIndex
 
     // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
+    while (currentIndex !== 0) {
       // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
+      randomIndex = Math.floor(Math.random() * currentIndex)
+      currentIndex -= 1
 
       // And swap it with the current element.
-      temporaryValue = data[currentIndex];
-      data[currentIndex] = data[randomIndex];
-      data[randomIndex] = temporaryValue;
+      temporaryValue = data[currentIndex]
+      data[currentIndex] = data[randomIndex]
+      data[randomIndex] = temporaryValue
     }
     res.render('pictures', {picture: data})
   })
 })
 
-router.get('/results', function(req, res) {
+router.get('/results', function (req, res) {
   res.render('results')
 })
 
-router.post('/results', function(req, res) {
+router.post('/results', function (req, res) {
   Country.find({
     picture: req.body.picture
-  }, function(err, data) {
+  }, function (err, data) {
     var h = []
-    data.map(function(each, index) {
-      request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+top+sights&key=AIzaSyAi5L8HFipThJzDSh6bghqzZD6NWp_pDh4`, function(err, response, body1) {
+    var z = []
+    var b = []
+    var k = []
+    data.map(function (each, index) {
+      request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+top+sights&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body1) {
         h.push(JSON.parse(body1))
-        if (index === data.length - 1) {
-          res.render('results', {
-            infos: data,
-            locals: h
-          })
-        }
+        request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+good+restaurants&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body2) {
+          z.push(JSON.parse(body2))
+          // h.forEach(function (data2) {
+          //   data2.results.forEach(function (data1) {
+          //     request(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${data1.place_id}&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body3) {
+          //       b.push(JSON.parse(body3))
+          //       z.forEach(function (data3) {
+          //         data3.results.forEach(function (data4) {
+          //           request(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${data4.place_id}&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body4) {
+          //             k.push(JSON.parse(body4))
+          //
+                      if (index === data.length - 1) {
+                        console.log('done', b)
+                        res.render('results', {
+                          infos: data,
+                          locals: h,
+                          second: z})
+                        }
+          //           })
+          //         })
+          //       })
+          //     })
+          //   })
+          // })
+        })
       })
     })
   })
 })
 
-router.get('/register', function(req, res) {
+router.get('/register', function (req, res) {
   res.render('signup')
 })
 
-router.post('/register', function(req, res) {
+router.post('/register', function (req, res) {
   var first_name = req.body.first_name
   var email = req.body.email
   var password = req.body.password
@@ -85,12 +106,20 @@ router.post('/register', function(req, res) {
   if (newUser.first_name === '' || newUser.email === '' || newUser.password === '') {
     res.send('error')
   } else {
-    newUser.save(function(err, data) {
-      if (err)
+    newUser.save(function (err, data) {
+      if (err) {
         throw err
+      }
       res.redirect('/')
     })
   }
+})
+
+router.get('/logout', function (req, res) {
+  req.logout()
+    // FLASH
+  req.flash('success', 'You have logged out')
+  res.redirect('/')
 })
 
 router.post('/login', passport.authenticate('local', {
@@ -99,21 +128,14 @@ router.post('/login', passport.authenticate('local', {
 }), (req, res) => {
   User.findOne({
     _id: req.user.id
-  }, function(err, data) {
-    if (err)
+  }, function (err, data) {
+    console.log(data)
+    if (err) {
       throw err
-      console.log(data)
-    var datas = data
-    // console.log(datas)
-    // console.log(req.user.id)
-    if (datas) {
-      if (datas._id.equals(req.user.id) && req.user.admin === true) {
-        req.flash("success", "successfully logged in")
-        res.redirect('/admin/profile')
-      }
     } else {
-      res.redirect('/profile')
+      res.redirect('/admin/countries')
     }
   })
 })
+
 module.exports = router

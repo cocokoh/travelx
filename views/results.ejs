@@ -23,7 +23,7 @@
                     <div class="col s12">
                         <ul class="tabs">
                             <li class="tab col s3">
-                                <a href="#<%= country_name_word %>rest">
+                                <a class="active" href="#<%= country_name_word %>rest">
                                     <%= datainfo.city %> Restaurants</a>
                             </li>
                             <li class="tab col s3">
@@ -33,19 +33,75 @@
                         </ul>
                     </div>
                     <div id="<%= country_name_word %>rest" class="col s12">
-                        <% locals.forEach(function(data1) { %>
-                            <% data1.results.forEach(function(data){ %>
-                                <% if (data.photos !== undefined && data.formatted_address.includes(datainfo.city)){ %>
-                                    <%= data.formatted_address %>
-                                        <img src = https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<%= data.photos[0].photo_reference %>&key=AIzaSyAi5L8HFipThJzDSh6bghqzZD6NWp_pDh4 >
-                                        <% }else if (data.photos == undefined && data.formatted_address.includes(datainfo.city)){ %>
-                                            <b><%= data.name %></b>
-                                            <%= data %>
-                                                <% }}) %>
-                                                    <% }) %>
+                        <div class="row">
+                            <div class="col s12">
+                                <% second.forEach(function(data2) { %>
+                                    <% data2.results.forEach(function(data3){ %>
+                                        <% if (data3.photos !== undefined && data3.formatted_address.includes(datainfo.city)){ %>
+                                            <div class="col l4">
+                                                <div class="card medium">
+                                                    <div class="card-image">
+                                                        <img src=https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&maxheight=600&photoreference=<%= data3.photos[0].photo_reference %>&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s>
+                                                        <span class="card-title"><%= data3.name %></span>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <p>
+                                                            <%= data3.formatted_address %>
+                                                        </p>
+                                                        <p>
+                                                        <b><%= data3.rating %></b>
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-action">
+
+                                                        <a href="#">Link</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <% }else if (data3.photos == undefined && data3.formatted_address.includes(datainfo.city)){ %>
+                                                <b><%= data3.name %></b>
+                                                <%= data3 %>
+                                                    <% }}) %>
+                                                        <% }) %>
+                                                            </br>
+                            </div>
+                        </div>
                     </div>
-                    <div id="<%= country_name_word %>att" class="col s12">Test 2</div>
+                    <div id="<%= country_name_word %>att" class="col s12">
+                        <div class="row">
+                            <div class="col s12">
+                                <% locals.forEach(function(data1) { %>
+                                    <% data1.results.forEach(function(data){ %>
+                                        <% if (data.photos !== undefined && data.formatted_address.includes(datainfo.city)){ %>
+                                            <div class="col l4">
+                                                <div class="card medium">
+                                                    <div class="card-image">
+                                                        <img src= https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=<%= data.photos[0].photo_reference %>&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s >
+                                                        <span class="card-title"><%= data.name %></span>
+                                                    </div>
+                                                    <div class="card-content">
+                                                        <p>
+                                                            <%= data.formatted_address %>
+                                                        </p>
+                                                        <p>
+                                                        <b><%= data.rating %></b>
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-action">
+                                                        <a href="#">This is a link</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }else if (data.photos == undefined && data.formatted_address.includes(datainfo.city)){ %>
+                                                <b><%= data.name %></b>
+                                                <%= data %>
+                                                    <% }}) %>
+                                                        <% }) %>
+                                                            </br>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
                 </div>
-        </div>
-        <% }) %>
-</div>

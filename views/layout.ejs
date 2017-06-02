@@ -17,12 +17,9 @@
         <div class="nav-wrapper">
             <a href="/" class="brand-logo right">SEAS THE MOMENT</a>
             <ul id="nav-mobile" class="center hide-on-med-and-down">
-                <li>
-                    <a href="/admin/countries">country</a>
-                </li>
                 <% if (!currentUser) { %>
-                    <li><a class="waves-effect waves-light btn" href="#modal1">Login</a></li>
-                    <div id="modal1" class="modal">
+                    <li><a class="waves-effect waves-light btn" href="#loginmodal">Login</a></li>
+                    <div id="loginmodal" class="modal">
                         <div class="modal-content">
                             <h4>Login</h4>
                             <form action="/login" method="POST">
@@ -40,13 +37,11 @@
                                 </div>
 
                                 <div class="modal-footer">
-                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit</a>
+                                    <input type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">
                                 </div>
                             </form>
                         </div>
                     </div>
-
-
 
                     <li><a href="/register">Register</a></li>
                     <% } %>
