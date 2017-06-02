@@ -50,17 +50,17 @@ router.post('/results', function (req, res) {
     var b = []
     var k = []
     data.map(function (each, index) {
-      request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+top+sights&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body1) {
+      request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+top+sights&key=AIzaSyC113IEaSViRdL1wg8-IuqM4jLsUofRuME`, function (err, response, body1) {
         h.push(JSON.parse(body1))
-        request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+good+restaurants&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body2) {
+        request(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${each.city}+good+restaurants&key=AIzaSyC113IEaSViRdL1wg8-IuqM4jLsUofRuME`, function (err, response, body2) {
           z.push(JSON.parse(body2))
           // h.forEach(function (data2) {
           //   data2.results.forEach(function (data1) {
-          //     request(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${data1.place_id}&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body3) {
+          //     request(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${data1.place_id}&key=AIzaSyC113IEaSViRdL1wg8-IuqM4jLsUofRuME`, function (err, response, body3) {
           //       b.push(JSON.parse(body3))
           //       z.forEach(function (data3) {
           //         data3.results.forEach(function (data4) {
-          //           request(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${data4.place_id}&key=AIzaSyCsBattXHltFHjWdaJjgRDq0j1auGp2R8s`, function (err, response, body4) {
+          //           request(`https://maps.googleapis.com/maps/api/place/details/json?placeid=${data4.place_id}&key=AIzaSyC113IEaSViRdL1wg8-IuqM4jLsUofRuME`, function (err, response, body4) {
           //             k.push(JSON.parse(body4))
           //
                       if (index === data.length - 1) {
