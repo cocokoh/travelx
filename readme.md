@@ -1,5 +1,5 @@
 # FLOWER FEET
-www.flowerfeet.herokuapp.com
+flowerfeet.herokuapp.com
 ## It is a platform for wanderers.
 
 ### Code and Database
